@@ -90,7 +90,7 @@ function setOccursGroup(    i) {
 	occursLevel = $2
 	if ( occursGrp ) {
 		for ( i = 1; i <= NF; i++ ) {   # this finds the field # that the occurs is in, and sets the times
-			if ($i == "OCCURS") {
+			if (($i == "OCCURS") || ($i == "OCCUR")) {
 				occTimes = $(i+1)
 				printf("%4s %4s   %-s\n", "OCCR", "GRP*", input)
 				next
@@ -133,14 +133,14 @@ BEGIN {
 	$2 == "VALUE" || $2 == "THRU" || $2 == "THROUGH" {next}
 	$3 == "THRU" || $3 == "THROUGH" {next}
 	$2 == "REFEFINES" || $3 == "REDEFINES" || $4 == "REDEFINES" {redeFlag = 1}
-	$3 == "OCCURS" || $4 == "OCCURS" {occursFlag = 1}
+	$3 == "OCCURS" || $4 == "OCCURS" || $3 == "OCCUR" || $4 == "OCCUR" {occursFlag = 1}
 {
 	input = hold_input = $0
 	
 	picFlag = match($0, / PIC | PICTURE /)
 	grpFlag = match($2, /[0-9][0-9]/)
 	redefines = match($0, / REDEF | REDEFINES /)
-	occursGrp = match($0, / OCCURS /)
+	occursGrp = match($0, / OCCURS | OCCUR /)
 	comp3 = match($0, / COMP-3\.| COMP-3 /)
 	comp = match($0, / COMP\.| COMP /)
 
